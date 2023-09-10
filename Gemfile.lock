@@ -1,0 +1,57 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.8.5)
+      public_suffix (>= 2.0.2, < 6.0)
+    crack (0.4.5)
+      rexml
+    date (3.3.3)
+    diff-lcs (1.5.0)
+    down (5.4.1)
+      addressable (~> 2.8)
+    hashdiff (1.0.1)
+    nokogiri (1.15.4-arm64-darwin)
+      racc (~> 1.4)
+    open-uri (0.3.0)
+      stringio
+      time
+      uri
+    optparse (0.3.1)
+    public_suffix (5.0.3)
+    racc (1.7.1)
+    rexml (3.2.6)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
+    stringio (3.0.8)
+    time (0.2.2)
+      date
+    uri (0.12.2)
+    webmock (3.19.1)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
+
+PLATFORMS
+  arm64-darwin-22
+
+DEPENDENCIES
+  down
+  nokogiri
+  open-uri
+  optparse
+  rspec
+  webmock
+
+BUNDLED WITH
+   2.4.19
