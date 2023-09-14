@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative '../smashing'
 require 'webmock/rspec'
 
@@ -19,7 +21,7 @@ describe 'Smashing Wallpaper Downloader' do
           <a href="wallpaper1.jpg">Wallpaper 1</a>
           <a href="wallpaper2.png">Wallpaper 2</a>
         HTML
-      )
+                  )
 
       Dir.mkdir('2023-01_640x480_wallpapers') unless Dir.exist?('2023-01_640x480_wallpapers')
     end
@@ -53,7 +55,7 @@ describe 'Smashing Wallpaper Downloader' do
       stub_request(:get, File.join(base_url, url))
         .to_return(body: 'Downloaded: mar-22-spring-is-coming-cal-640x480.jpg')
 
-      allow(Down).to receive(:download).and_return(File.new(wallpaper_path, "w"))
+      allow(Down).to receive(:download).and_return(File.new(wallpaper_path, 'w'))
 
       download_wallpaper(base_url, url, resolution, download_directory)
       expect(File.exist?(wallpaper_path)).to be_truthy
@@ -81,7 +83,7 @@ describe 'Smashing Wallpaper Downloader' do
     let(:year) { 2023 }
     let(:month) { 1 }
     let(:resolution) { '640x480' }
-    let(:base_url) { "https://www.smashingmagazine.com/2022/12/desktop-wallpaper-calendars-january-2023/" }
+    let(:base_url) { 'https://www.smashingmagazine.com/2022/12/desktop-wallpaper-calendars-january-2023/' }
     let(:download_directory) { "#{year}-#{month.to_s.rjust(2, '0')}_#{resolution}_wallpapers" }
 
     before do
