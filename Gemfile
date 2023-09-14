@@ -1,11 +1,12 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
+gem 'down'
 gem 'nokogiri'
 gem 'open-uri'
-gem 'down'
 gem 'optparse'
+gem 'rubocop'
 
 group :test do
   gem 'rspec'
