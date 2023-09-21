@@ -5,25 +5,16 @@ require 'open-uri'
 require 'down'
 require 'optparse'
 
-options = {}
-OptionParser.new do |opts|
-  opts.banner = 'Usage: smashing.rb [options]'
-
-  opts.on('--month MONTH', 'Specify the month in the format MMYYYY') do |month|
-    options[:month] = month
-  end
-
-  opts.on('--resolution RESOLUTION', 'Specify the resolution (e.g., 640x480)') do |resolution|
-    options[:resolution] = resolution
-  end
-end.parse!
+# Define constants for error messages
+ERROR_FETCH_PARSE = 'Error fetching or parsing the page:'
+ERROR_DOWNLOAD = 'Failed to download:'
 
 def fetch_wallpaper_links(base_url)
   html = URI.open(base_url).read
   doc = Nokogiri::HTML(html)
   doc.css('a[href$=".jpg"], a[href$=".png"]').map { |a| a['href'] }
 rescue OpenURI::HTTPError, StandardError => e
-  puts "Error fetching or parsing the page: #{e.message}"
+  puts "#{ERROR_FETCH_PARSE} #{e.message}"
   nil
 end
 
@@ -41,7 +32,7 @@ def download_wallpaper(base_url, url, resolution, download_directory)
     Down.download(wallpaper_url, destination: wallpaper_path)
     puts "Downloaded: #{wallpaper_filename}"
   rescue StandardError
-    puts "Failed to download: #{wallpaper_filename}"
+    puts "#{ERROR_DOWNLOAD} #{wallpaper_filename}"
   end
 end
 
@@ -52,7 +43,7 @@ def download_wallpapers(year, month, resolution)
              "/desktop-wallpaper-calendars-#{Date::MONTHNAMES[month].downcase}-#{year}/"
   wallpaper_links = fetch_wallpaper_links(base_url)
 
-  if wallpaper_links.empty?
+  if wallpaper_links.nil?
     puts 'No wallpapers found for the specified month and year.'
     return
   end
@@ -64,6 +55,19 @@ def download_wallpapers(year, month, resolution)
     download_wallpaper(base_url, link, resolution, download_directory)
   end
 end
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = 'Usage: smashing.rb [options]'
+
+  opts.on('--month MONTH', 'Specify the month in the format MMYYYY') do |month|
+    options[:month] = month
+  end
+
+  opts.on('--resolution RESOLUTION', 'Specify the resolution (e.g., 640x480)') do |resolution|
+    options[:resolution] = resolution
+  end
+end.parse!
 
 if options[:month] && options[:resolution]
   month = options[:month][0, 2]
